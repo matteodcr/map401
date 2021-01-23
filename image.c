@@ -171,17 +171,17 @@ Image lire_fichier_image(char *nom_f)
 	   seuls les caracteres '0' (BLANC) ou '1' (NOIR) 
 	   doivent etre pris en compte */
 	char c;
-    int a;
-	for (int i=0; i<(L+1)*H; i++){
-        fscanf(f, "%c", &c);
-        if (c != '\n'){
-            a = c - '0';
-            if (a == 0){
-                I.tab[i] = BLANC;
-            } else if (a == 1){
-                I.tab[i] = NOIR;
-            }
-        }  
+    int x, y, a;
+	for(y=1; y<=H; y++){
+		for(x=1; x<=L; x++){
+			fscanf(f, "%c", &c);
+			if (c == '0' || c == '1'){
+				a = atoi(&c);
+				set_pixel_image(I,x,y,a);	
+			} else {
+				x--;
+			}
+		}
     }
 	/* fermeture du fichier */
 	fclose(f);
@@ -192,15 +192,15 @@ Image lire_fichier_image(char *nom_f)
 /* �crire l'image I � l'�cran */
 void ecrire_image(Image I)
 {
-    for(int i=0; i<I.H; i++){
-        for(int j=0; j<I.L; j++){
-            if (I.tab[j+(I.H-1)*i] == NOIR){
-                printf("*");
+    for(int i=1; i<=I.H; i++){
+        for(int j=1; j<=I.L; j++){
+            if (get_pixel_image(I, j, i) == NOIR){
+                putc('#', stdout);
             } else {
-                printf(" ");
+                putc(' ', stdout);
             }
         }
-        printf("\n");
+        putc('\n', stdout);
     }
 }
 

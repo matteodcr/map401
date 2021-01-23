@@ -1,4 +1,12 @@
-test_geom2d.o
-geom2d.o
 image.o
+test_image.o
+test_image
 
+
+geom2d.o
+test_geom2d.o
+test_geom2d
+
+calcul_contour.o
+test_calcul_contour.o
+test_calcul_contour

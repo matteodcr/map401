@@ -2,6 +2,7 @@
 #define _GEOM2D_H_
 
 #include "types_macros.h"
+#include <math.h>
 
 typedef struct Vecteur_{
     double x,y;

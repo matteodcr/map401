@@ -37,7 +37,7 @@ INCLUDEOPTS = -I$(INCDIR)
 COMPILOPTS = -g -Wall $(INCLUDEOPTS)
 
 # liste des executables
-EXECUTABLES = test_image test_geom2d
+EXECUTABLES = test_image test_geom2d test_calcul_contour
 
 
 #############################################################################
@@ -90,6 +90,20 @@ test_geom2d.o : test_geom2d.c geom2d.h
 	@echo "Compilation du module test_geom2d"
 	@echo "---------------------------------------------"
 	$(CC) -c $(COMPILOPTS) $<
+
+calcul_contour.o : calcul_contour.c calcul_contour.h image.h
+	@echo ""
+	@echo "---------------------------------------------"
+	@echo "Compilation du module calcul_contour"
+	@echo "---------------------------------------------"
+	$(CC) -c $(COMPILOPTS) $<
+
+test_calcul_contour.o : test_calcul_contour.c calcul_contour.h image.h
+	@echo ""
+	@echo "---------------------------------------------"
+	@echo "Compilation du module test_calcul_contour"
+	@echo "---------------------------------------------"
+	$(CC) -c $(COMPILOPTS) $<
 		
 		
 ########################################################
@@ -98,14 +112,21 @@ test_geom2d.o : test_geom2d.c geom2d.h
 test_image : test_image.o image.o 
 	@echo ""
 	@echo "---------------------------------------------"
-	@echo "Creation de l'executable"$@
+	@echo "Creation de l'executable" $@
 	@echo "---------------------------------------------"
 	$(CC) $^ $(LDOPTS) -o $@
 
 test_geom2d : test_geom2d.o geom2d.o 
 	@echo ""
 	@echo "---------------------------------------------"
-	@echo "Creation de l'executable"$@
+	@echo "Creation de l'executable" $@
+	@echo "---------------------------------------------"
+	$(CC) $^ $(LDOPTS) -o $@
+
+test_calcul_contour : test_calcul_contour.o calcul_contour.o image.o
+	@echo ""
+	@echo "---------------------------------------------"
+	@echo "Creation de l'executable" $@
 	@echo "---------------------------------------------"
 	$(CC) $^ $(LDOPTS) -o $@
 
