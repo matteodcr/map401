@@ -1,0 +1,31 @@
+chat.pbm :
+largeur : 250  hauteur : 140
+nombre de segments du contour : 879
+
+coq.pbm :
+largeur : 700  hauteur : 720
+nombre de segments du contour : 5385
+
+elephant.pbm :
+largeur : 800  hauteur : 700
+nombre de segments du contour : 5343
+
+gymnaste.pbm :
+largeur : 1056  hauteur : 1647
+nombre de segments du contour : 8783
+
+labyrinthe.pbm :
+largeur : 221  hauteur : 201
+nombre de segments du contour : 43999
+
+lettreZ.pbm :
+largeur : 600  hauteur : 1029
+nombre de segments du contour : 9395
+
+map401.pbm :
+largeur : 830  hauteur : 300
+nombre de segments du contour : 8071
+
+tete.pbm :
+largeur : 1252  hauteur : 1252
+nombre de segments du contour : 8135
