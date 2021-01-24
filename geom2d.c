@@ -40,10 +40,10 @@ int produit_scalaire(Vecteur u, Vecteur v){
     return (u.x*v.x + u.y*v.y);
 }
 
-int norme_vect(Vecteur u){
+double norme_vect(Vecteur u){
     return sqrt(u.x*u.x + u.y*u.y);
 }
 
-int dist_points(Point A, Point B){
+double dist_points(Point A, Point B){
     return sqrt((A.x-B.x)*(A.x-B.x) + (A.y-B.y)*(A.y-B.y));
 }

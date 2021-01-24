@@ -29,9 +29,9 @@ Vecteur produit_point_vect(Point P, Vecteur u);;
 
 int produit_scalaire(Vecteur u, Vecteur v);
 
-int norme_vect(Vecteur u);
+double norme_vect(Vecteur u);
 
-int dist_points(Point A, Point B);
+double dist_points(Point A, Point B);
 
 
 #endif 
