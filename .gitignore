@@ -2,7 +2,6 @@ image.o
 test_image.o
 test_image
 
-
 geom2d.o
 test_geom2d.o
 test_geom2d
@@ -10,3 +9,7 @@ test_geom2d
 calcul_contour.o
 test_calcul_contour.o
 test_calcul_contour
+
+Tâche_1_Decorsaire_Grange.zip
+Tâche_2_Decorsaire_Grange.pdf
+Tâche_2_Decorsaire_Grange.odt

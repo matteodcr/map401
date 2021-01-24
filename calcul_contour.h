@@ -42,6 +42,8 @@ Liste_Point concatener_liste_Point(Liste_Point L1, Liste_Point L2);
 
 void ecrire_contour(Liste_Point L);
 
+void ecrire_contour_fichier(Liste_Point L);
+
 Point trouver_pixel_depart(Image I);
 
 void avance(Point *P, Orientation O);

@@ -90,12 +90,30 @@ void ecrire_contour(Liste_Point L){
     int k;
     int nP = TP.taille;
 
+    printf("\nNombre de segments composant le contour : %d\n", nP-1);
     printf("%d points : [", nP);
     for (k = 0; k < nP; k++){
         Point P = TP.tab[k];
         printf(" (%5.1f, %5.1f)", P.x, P.y);
     }
     printf("]\n");
+    free(TP.tab);
+}
+
+void ecrire_contour_fichier(Liste_Point L){
+    Tableau_Point TP = sequence_points_liste_vers_tableau(L);
+    int k;
+    int nP = TP.taille;
+    int nC = 1;
+
+    FILE *f = fopen("resultat.contours", "w");
+
+    fprintf(f, "%d\n", nC);
+    fprintf(f, "%d\n", nP);
+    for (k = 0; k < nP; k++){
+        Point P = TP.tab[k];
+        fprintf(f, "%.1f %.1f\n", P.x, P.y);
+    }
     free(TP.tab);
 }
 
@@ -219,11 +237,13 @@ Orientation nouvelle_orientation(Image I, Point P, Orientation O){
 
 
 Liste_Point contour(Image I){
+    int n = 0;
+
     Point P0 = trouver_pixel_depart(I);
     P0.x = P0.x-1;
     P0.y = P0.y-1;
 
-    printf("Point Ini: (%f, %f)\n", P0.x, P0.y);
+    printf("Point initial : (%.1f, %.1f)\n", P0.x, P0.y);
 
     Liste_Point Liste = creer_liste_Point_vide();
 
@@ -231,10 +251,12 @@ Liste_Point contour(Image I){
     Orientation Or = Est;
     
     while(true){
+        n++;
         ajouter_element_liste_Point(&Liste, P);
         avance(&P, Or);
         Or = nouvelle_orientation(I, P, Or);
         if (P.x==P0.x && P.y == P0.y && Or==Est){
+            printf("\nNombre de segments composant le contour : %d\n", n-1);
             return Liste;
         }
     }
