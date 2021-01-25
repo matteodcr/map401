@@ -44,6 +44,18 @@ void ecrire_contour(Liste_Point L);
 
 void ecrire_contour_fichier(Liste_Point L);
 
+FILE* initialiser_eps(char *nom_f, int xmin, int ymin, int xmax, int ymax);
+
+void point_courant(FILE *f, Point A);
+
+void tracer_segment(FILE *f, Point B);
+
+void tracer_point(FILE *f, Point C, float rayon);
+
+void fin_eps(FILE* f);
+
+void ecrire_eps(char *f_entree, char *f_sortie, int m);
+
 Point trouver_pixel_depart(Image I);
 
 void avance(Point *P, Orientation O);

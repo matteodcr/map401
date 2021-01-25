@@ -7,7 +7,7 @@
 
 int main(int argc, char *argv[]) {
     if (argc != 9){
-        printf("Usage : ./test_image <x, y Point A> <x, y Point B> <x, y Point C> <x, y Point D>");
+        printf("Usage : ./test_geom2d <x, y Point A> <x, y Point B> <x, y Point C> <x, y Point D>");
     }
     
     //Création de 4 points

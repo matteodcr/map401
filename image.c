@@ -189,6 +189,37 @@ Image lire_fichier_image(char *nom_f)
 	return I;
 }
 
+Image lire_fichier_image_inverse(char *nom_f){
+	FILE *f;
+	UINT L,H;
+	Image I;
+	f = fopen(nom_f, "r");
+	if (f == (FILE *)NULL)
+	{
+		ERREUR_FATALE("lire_fichier_image_inverse : ouverture du fichier impossible\n");
+	}
+	
+	entete_fichier_pbm(f);
+    fscanf(f, "%d %d", &L, &H);
+	I = creer_image(L, H);
+	
+	char c;
+    int x, y, a;
+	for(y=1; y<=H; y++){
+		for(x=1; x<=L; x++){
+			fscanf(f, "%c", &c);
+			if (c == '0' || c == '1'){
+				a = atoi(&c);
+				set_pixel_image(I,x,H-y,a);	
+			} else {
+				x--;
+			}
+		}
+    }
+	fclose(f);	
+	return I;
+}
+
 /* �crire l'image I � l'�cran */
 void ecrire_image(Image I)
 {

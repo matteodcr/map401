@@ -51,6 +51,8 @@ Image calculer_masque_image(Image I);
    un message */
 Image lire_fichier_image(char *nom_f);
 
+Image lire_fichier_image_inverse(char *nom_f);
+
 /* �crire l'image I � l'�cran */
 void ecrire_image(Image I);
 
