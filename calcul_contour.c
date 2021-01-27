@@ -89,7 +89,7 @@ void ecrire_contour(Liste_Point L){
     int k;
     int nP = TP.taille;
 
-    printf("\nNombre de segments composant le contour : %d\n", nP-1);
+    printf("\nNombre de segments composant le contour : %d\n", nP);
     printf("%d points : [", nP);
     for (k = 0; k < nP; k++){
         Point P = TP.tab[k];
@@ -336,7 +336,7 @@ Liste_Point contour(Image I){
         avance(&P, Or);
         Or = nouvelle_orientation(I, P, Or);
         if (P.x==P0.x && P.y == P0.y && Or==Est){
-            printf("\nNombre de segments composant le contour : %d\n", n-1);
+            printf("\nNombre de segments composant le contour : %d\n", n);
             return Liste;
         }
     }

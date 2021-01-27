@@ -1,31 +1,39 @@
 chat.pbm :
 largeur : 250  hauteur : 140
-nombre de segments du contour : 879
+nombre de segments du contour : 880
 
 coq.pbm :
 largeur : 700  hauteur : 720
-nombre de segments du contour : 5385
+nombre de segments du contour : 5386
 
 elephant.pbm :
 largeur : 800  hauteur : 700
-nombre de segments du contour : 5343
+nombre de segments du contour : 5344
 
 gymnaste.pbm :
 largeur : 1056  hauteur : 1647
-nombre de segments du contour : 8783
+nombre de segments du contour : 8784
 
 labyrinthe.pbm :
 largeur : 221  hauteur : 201
-nombre de segments du contour : 43999
+nombre de segments du contour : 44000
 
 lettreZ.pbm :
 largeur : 600  hauteur : 1029
-nombre de segments du contour : 9395
+nombre de segments du contour : 9396
 
 map401.pbm :
 largeur : 830  hauteur : 300
-nombre de segments du contour : 8071
+nombre de segments du contour : 8072
 
 tete.pbm :
 largeur : 1252  hauteur : 1252
-nombre de segments du contour : 8135
+nombre de segments du contour : 8136
+
+diago.pbm :
+largeur : 7  hauteur : 9
+nombre de segments du contour : 68
+
+ligne.pbm :
+largeur : 7  hauteur : 9
+nombre de segments du contour : 16
