@@ -89,7 +89,7 @@ void ecrire_contour(Liste_Point L){
     int k;
     int nP = TP.taille;
 
-    printf("\nNombre de segments composant le contour : %d\n", nP);
+    printf("\nNombre de segments composant le contour : %d\n", nP-1);
     printf("%d points : [", nP);
     for (k = 0; k < nP; k++){
         Point P = TP.tab[k];
@@ -197,6 +197,31 @@ void ecrire_eps(char *f_entree, char *f_sortie, int m){
     fin_eps(f);
 }
 
+int rechercher_pixel_noir(Image I, int *xp, int *yp){
+    int x, y;
+	for(y=1; y<=I.H; y++){
+		for(x=1; x<=I.L; x++){
+			if (get_pixel_image(I, x, y)==NOIR ){
+                xp = &x;
+                yp = &y;
+				return 1;
+			}	
+		}
+    }
+    return 0;
+}
+
+void contour_multiple(Image I, Image Im){
+    int *xp;
+    int *yp;
+
+    while(rechercher_pixel_noir(Im, xp, yp)==1){
+        Liste_Point L = creer_liste_Point_vide();
+        L = contour(I);
+        ecrire_contour(L);
+    }
+}
+
 Point trouver_pixel_depart(Image I){
     for (int y=0; y<I.H; y++){
         for (int x=0; x<I.L; x++){
@@ -209,6 +234,8 @@ Point trouver_pixel_depart(Image I){
     }
     ERREUR_FATALE("PAS DE POINT NOIR");
 }
+
+
 
 void avance(Point *P, Orientation O){
     switch (O)

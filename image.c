@@ -220,6 +220,34 @@ Image lire_fichier_image_inverse(char *nom_f){
 	return I;
 }
 
+Image initialiser_image_blanche(Image I){
+    Image Ib;
+	Ib = creer_image(I.L, I.H);
+	
+    int x, y;
+	for(y=1; y<=I.H; y++){
+		for(x=1; x<=I.L; x++){
+			set_pixel_image(Ib,x,y,BLANC);	
+		}
+    }	
+	return I;
+}
+
+Image creer_image_masque(Image I){
+	Image Im = initialiser_image_blanche(I);
+
+	int x, y;
+	for(y=1; y<=I.H; y++){
+		for(x=1; x<=I.L; x++){
+			if (get_pixel_image(I, x, y)==NOIR 
+			&& get_pixel_image(I, x, y-1)==BLANC){
+				set_pixel_image(Im,x,y,NOIR);
+			}
+				
+		}
+    }
+}
+
 /* �crire l'image I � l'�cran */
 void ecrire_image(Image I)
 {
