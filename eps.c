@@ -6,15 +6,6 @@
 #include <geom2d.h>
 #include <calcul_contour.h>
 
-FILE* initialiser_fichier_entree(char *nom_f_entree, char *nom_f_sortie, int xmin, int ymin, int xmax, int ymax){
-	FILE *f_entree = fopen(nom_f_entree, "w");
-	if (f_entree == (FILE *)NULL){
-		ERREUR_FATALE("initialiser_eps : ouverture du fichier entree impossible\n");
-	}
-
-	return f_entree;
-}
-
 FILE* initialiser_fichier_sortie(char *nom_f_sortie, int xmin, int ymin, int xmax, int ymax){
     FILE *f_sortie = fopen(nom_f_sortie, "w");
 	if (f_sortie == (FILE *)NULL){
@@ -28,19 +19,17 @@ FILE* initialiser_fichier_sortie(char *nom_f_sortie, int xmin, int ymin, int xma
 	return f_sortie;
 }
 
-void point_courant(FILE* f_entree, FILE *f_sortie, Point A){
-    fscanf(f_entree)
-    fprintf(f_sortie, "%0.f %0.f moveto\n", A.x, A.y);
+void point_courant(FILE* f, Point A){
+    fprintf(f, "%0.f %0.f moveto\n", A.x, A.y);
 }
 
 void tracer_segment(FILE* f_entree, FILE *f_sortie, Point B){
     fprintf(f_sortie, "%0.f %0.f lineto\n",B.x, B.y);
 }
 
-void fin_eps(FILE* f_entree, FILE *f_sortie){
-	fprintf(f_sortie, "showpage");
-    fclose(f_entree);
-    fclose(f_sortie);
+void fin_eps(FILE* f){
+	fprintf(f, "showpage");
+    fclose(f);
 }
 
 void ecrire_eps(char *f_entree, char *f_sortie, int m){

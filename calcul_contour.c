@@ -248,9 +248,6 @@ void formater_fichier_sortie(){
 
    while ((c = fgetc(f1)) != EOF) 
       fputc(c, f3); 
-   
-  
-   printf("Les deux fichier sont bien fusionnés dans le file3.txt"); 
   
    fclose(f1); 
    fclose(f2); 
@@ -274,24 +271,24 @@ int trouver_pixel_depart(Image I, Point *P){
 void contour_multiple(Image I){
     Image Im = creer_image_masque(I);
     Point P;
+    int n = 0;
+    int i = 0;
 
     initialiser_fichier();
-    
-    int i = 0;
     while(trouver_pixel_depart(Im, &P)==1){
         Liste_Point L = creer_liste_Point_vide();
-        L = contour(I, &Im, P.x, P.y);
+        // simpl du contour
+        //Ecrire eps
+        L = contour(I, &Im, P.x, P.y, &n, &i);
         ecrire_contour_fichier(L);
-        i++;
     }
+    printf("\nNombre de segments composant le contour : %d\n", n);
     init_nb_contour(i);
     formater_fichier_sortie();
 }
 
 
-Liste_Point contour(Image I, Image *Im, int x, int y){
-    int n = 0;
-
+Liste_Point contour(Image I, Image *Im, int x, int y, int *n, int *i){
     Point P0;
     P0.x = x-1;
     P0.y = y-1;
@@ -301,16 +298,17 @@ Liste_Point contour(Image I, Image *Im, int x, int y){
 
     Point P = P0;
     Orientation Or = Est;
-    
+    *i = *i +1;
+    printf("%d", *i);
     while(true){
-        n++;
+        *n = *n+1;
         ajouter_element_liste_Point(&Liste, P);
         set_pixel_image(*Im, P.x+1, P.y+1, BLANC);
         avance(&P, Or);
         Or = nouvelle_orientation(I, P, Or);
 
         if (P.x==P0.x && P.y == P0.y && Or==Est){
-            printf("\nNombre de segments composant le contour : %d\n", n);
+            //printf("\nNombre de segments composant le contour : %d\n", n);
             ajouter_element_liste_Point(&Liste, P);
             return Liste;
         }
