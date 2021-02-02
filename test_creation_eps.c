@@ -3,6 +3,8 @@
 #include<string.h>
 #include"calcul_contour.h"
 #include"image.h"
+#include"eps.h"
+
 
 int main(int argc, char *argv[]) {
     if (argc != 4){

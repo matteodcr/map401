@@ -91,6 +91,13 @@ test_geom2d.o : test_geom2d.c geom2d.h
 	@echo "---------------------------------------------"
 	$(CC) -c $(COMPILOPTS) $<
 
+eps.o : eps.c calcul_contour.h image.h geom2d.h
+	@echo ""
+	@echo "---------------------------------------------"
+	@echo "Compilation du module eps"
+	@echo "---------------------------------------------"
+	$(CC) -c $(COMPILOPTS) $<
+
 calcul_contour.o : calcul_contour.c calcul_contour.h image.h
 	@echo ""
 	@echo "---------------------------------------------"
@@ -105,7 +112,7 @@ test_calcul_contour.o : test_calcul_contour.c calcul_contour.h image.h
 	@echo "---------------------------------------------"
 	$(CC) -c $(COMPILOPTS) $<
 
-test_creation_eps.o : test_creation_eps.c calcul_contour.h image.h
+test_creation_eps.o : test_creation_eps.c calcul_contour.h image.h eps.h
 	@echo ""
 	@echo "---------------------------------------------"
 	@echo "Compilation du module test_creation_eps"
@@ -137,7 +144,7 @@ test_calcul_contour : test_calcul_contour.o calcul_contour.o image.o
 	@echo "---------------------------------------------"
 	$(CC) $^ $(LDOPTS) -o $@
 
-test_creation_eps : test_creation_eps.o calcul_contour.o image.o
+test_creation_eps : test_creation_eps.o calcul_contour.o image.o eps.o
 	@echo ""
 	@echo "---------------------------------------------"
 	@echo "Creation de l'executable" $@

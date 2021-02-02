@@ -53,6 +53,10 @@ Image lire_fichier_image(char *nom_f);
 
 Image lire_fichier_image_inverse(char *nom_f);
 
+Image initialiser_image_blanche(Image I);
+
+Image creer_image_masque(Image I);
+
 /* �crire l'image I � l'�cran */
 void ecrire_image(Image I);
 

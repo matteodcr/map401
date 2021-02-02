@@ -229,8 +229,8 @@ Image initialiser_image_blanche(Image I){
 		for(x=1; x<=I.L; x++){
 			set_pixel_image(Ib,x,y,BLANC);	
 		}
-    }	
-	return I;
+    }
+	return Ib;
 }
 
 Image creer_image_masque(Image I){
@@ -246,6 +246,7 @@ Image creer_image_masque(Image I){
 				
 		}
     }
+	return Im;
 }
 
 /* �crire l'image I � l'�cran */
@@ -256,7 +257,7 @@ void ecrire_image(Image I)
             if (get_pixel_image(I, j, i) == NOIR){
                 putc('#', stdout);
             } else {
-                putc(' ', stdout);
+                putc('.', stdout);
             }
         }
         putc('\n', stdout);
