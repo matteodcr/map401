@@ -3,6 +3,7 @@
 #include <calcul_contour.h>
 #include <image.h>
 #include <geom2d.h>
+#include <eps.h>
 
 
 Cellule_Liste_Point* creer_element_liste_Point(Point v){
@@ -268,47 +269,40 @@ int trouver_pixel_depart(Image I, Point *P){
 }
 
 
-void contour_multiple(Image I){
+void contour_multiple(Image I, char *nom_f){
     Image Im = creer_image_masque(I);
     Point P;
-    int n = 0;
     int i = 0;
+    FILE *f = initialiser_eps(nom_f, 0, 0, I.L, I.H );
 
     initialiser_fichier();
     while(trouver_pixel_depart(Im, &P)==1){
         Liste_Point L = creer_liste_Point_vide();
-        // simpl du contour
-        //Ecrire eps
-        L = contour(I, &Im, P.x, P.y, &n, &i);
-        ecrire_contour_fichier(L);
+        L = contour(I, &Im, P.x, P.y, &i);
+        Tableau_Point T = sequence_points_liste_vers_tableau(L);
+        ecrire_eps(f, T);
     }
-    printf("\nNombre de segments composant le contour : %d\n", n);
-    init_nb_contour(i);
-    formater_fichier_sortie();
+    fin_eps(f);
 }
 
 
-Liste_Point contour(Image I, Image *Im, int x, int y, int *n, int *i){
+Liste_Point contour(Image I, Image *Im, int x, int y, int *i){
     Point P0;
     P0.x = x-1;
     P0.y = y-1;
-    printf("Point initial : (%.1f, %.1f)\n", P0.x, P0.y);
 
     Liste_Point Liste = creer_liste_Point_vide();
-
     Point P = P0;
     Orientation Or = Est;
+
     *i = *i +1;
-    printf("%d", *i);
     while(true){
-        *n = *n+1;
         ajouter_element_liste_Point(&Liste, P);
         set_pixel_image(*Im, P.x+1, P.y+1, BLANC);
         avance(&P, Or);
         Or = nouvelle_orientation(I, P, Or);
 
         if (P.x==P0.x && P.y == P0.y && Or==Est){
-            //printf("\nNombre de segments composant le contour : %d\n", n);
             ajouter_element_liste_Point(&Liste, P);
             return Liste;
         }

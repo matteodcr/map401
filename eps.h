@@ -13,6 +13,8 @@ void tracer_segment(FILE *f,Point B);
 
 void tracer_point(FILE *f, Point C, float rayon);
 
-void ecrire_eps(char *f_entree, char *f_sortie, int m);
+void ecrire_eps(FILE *f, Tableau_Point T);
+
+void fin_eps(FILE* f);
 
 #endif

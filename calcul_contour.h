@@ -59,6 +59,6 @@ void contour_multiple(Image I);
 
 
 /* fait le contour a partir du point de coordonée(x, y) */
-Liste_Point contour(Image I, Image *Im, int x, int y, int *n, int *i);
+Liste_Point contour(Image I, Image *Im, int x, int y, int *i);
 
 #endif

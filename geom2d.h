@@ -18,6 +18,10 @@ Point set_point(double x, double y);
 /* somme P1 + P2 */
 Point add_point(Point P1, Point P2);
 
+Point sous_point(Point P1, Point P2);
+
+Point mult_point(int n, Point P);
+
 /* Vecteur correspondant au bipoint AB */
 Vecteur vect_bipoint(Point A, Point B);
 

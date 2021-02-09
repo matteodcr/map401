@@ -16,6 +16,17 @@ Point add_point(Point P1, Point P2){
     Point P = {P1.x + P2.x, P1.y + P2.y};
     return P;
 }
+
+Point sous_point(Point P1, Point P2){
+    Point P = {P1.x - P2.x, P1.y - P2.y};
+    return P;
+}
+
+Point mult_point(int n, Point P){
+    Point P = {n*P.x, n*P.y};
+    return P;
+}
+
 Vecteur vect_bipoint(Point A, Point B){
     Vecteur w = {B.x - A.x, B.y - A.y};
     return w;
