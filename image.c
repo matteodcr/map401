@@ -210,7 +210,7 @@ Image lire_fichier_image_inverse(char *nom_f){
 			fscanf(f, "%c", &c);
 			if (c == '0' || c == '1'){
 				a = atoi(&c);
-				set_pixel_image(I,x,H-y,a);	
+				set_pixel_image(I,x,H-y+1,a);	
 			} else {
 				x--;
 			}

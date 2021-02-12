@@ -23,8 +23,8 @@ Point sous_point(Point P1, Point P2){
 }
 
 Point mult_point(int n, Point P){
-    Point P = {n*P.x, n*P.y};
-    return P;
+    Point R = {n*P.x, n*P.y};
+    return R;
 }
 
 Vecteur vect_bipoint(Point A, Point B){

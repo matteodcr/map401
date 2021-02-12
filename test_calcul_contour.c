@@ -5,9 +5,10 @@
 #include"image.h"
 
 int main(int argc, char *argv[]) {
-    if (argc != 2){
+    if (argc != 3){
         printf("Usage : ./test_calcul_contour <nom du fichier de test>");
     }
-    contour_multiple(lire_fichier_image(argv[1]));
+
+    contour_multiple(lire_fichier_image_inverse(argv[1]), argv[2]);
     return 0;
 }

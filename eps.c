@@ -41,6 +41,4 @@ void ecrire_eps(FILE *f, Tableau_Point T){
     }
     tracer_segment(f, T.tab[0]);
     fprintf(f, "fill\n");
-
-    fin_eps(f);
 }

@@ -256,8 +256,8 @@ void formater_fichier_sortie(){
 }
 
 int trouver_pixel_depart(Image I, Point *P){
-    for (int y=0; y<I.H; y++){
-        for (int x=0; x<I.L; x++){
+    for (int y=1; y<=I.H; y++){
+        for (int x=1; x<=I.L; x++){
             if(get_pixel_image(I, x, y)==NOIR){
                 P->x = x;
                 P->y = y;
@@ -279,6 +279,7 @@ void contour_multiple(Image I, char *nom_f){
     while(trouver_pixel_depart(Im, &P)==1){
         Liste_Point L = creer_liste_Point_vide();
         L = contour(I, &Im, P.x, P.y, &i);
+
         Tableau_Point T = sequence_points_liste_vers_tableau(L);
         ecrire_eps(f, T);
     }
@@ -291,6 +292,8 @@ Liste_Point contour(Image I, Image *Im, int x, int y, int *i){
     P0.x = x-1;
     P0.y = y-1;
 
+    printf("Point initial : (%.1f, %.1f)\n", P0.x, P0.y);
+
     Liste_Point Liste = creer_liste_Point_vide();
     Point P = P0;
     Orientation Or = Est;
@@ -298,7 +301,11 @@ Liste_Point contour(Image I, Image *Im, int x, int y, int *i){
     *i = *i +1;
     while(true){
         ajouter_element_liste_Point(&Liste, P);
-        set_pixel_image(*Im, P.x+1, P.y+1, BLANC);
+
+        if (Or == Est){
+            set_pixel_image(*Im, P.x+1, P.y+1, BLANC);
+        }
+
         avance(&P, Or);
         Or = nouvelle_orientation(I, P, Or);
 

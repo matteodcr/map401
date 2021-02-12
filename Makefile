@@ -37,7 +37,7 @@ INCLUDEOPTS = -I$(INCDIR)
 COMPILOPTS = -g -Wall $(INCLUDEOPTS)
 
 # liste des executables
-EXECUTABLES = test_image test_geom2d test_calcul_contour test_creation_eps
+EXECUTABLES = test_image test_geom2d test_calcul_contour
 
 
 #############################################################################
@@ -98,27 +98,19 @@ eps.o : eps.c calcul_contour.h image.h geom2d.h
 	@echo "---------------------------------------------"
 	$(CC) -c $(COMPILOPTS) $<
 
-calcul_contour.o : calcul_contour.c calcul_contour.h image.h
+calcul_contour.o : calcul_contour.c calcul_contour.h image.h eps.h
 	@echo ""
 	@echo "---------------------------------------------"
 	@echo "Compilation du module calcul_contour"
 	@echo "---------------------------------------------"
 	$(CC) -c $(COMPILOPTS) $<
 
-test_calcul_contour.o : test_calcul_contour.c calcul_contour.h image.h
+test_calcul_contour.o : test_calcul_contour.c calcul_contour.h image.h eps.h
 	@echo ""
 	@echo "---------------------------------------------"
 	@echo "Compilation du module test_calcul_contour"
 	@echo "---------------------------------------------"
 	$(CC) -c $(COMPILOPTS) $<
-
-test_creation_eps.o : test_creation_eps.c calcul_contour.h image.h eps.h
-	@echo ""
-	@echo "---------------------------------------------"
-	@echo "Compilation du module test_creation_eps"
-	@echo "---------------------------------------------"
-	$(CC) -c $(COMPILOPTS) $<
-		
 		
 ########################################################
 # regles explicites de creation des executables
@@ -137,21 +129,12 @@ test_geom2d : test_geom2d.o geom2d.o
 	@echo "---------------------------------------------"
 	$(CC) $^ $(LDOPTS) -o $@
 
-test_calcul_contour : test_calcul_contour.o calcul_contour.o image.o
+test_calcul_contour : test_calcul_contour.o calcul_contour.o image.o eps.o
 	@echo ""
 	@echo "---------------------------------------------"
 	@echo "Creation de l'executable" $@
 	@echo "---------------------------------------------"
 	$(CC) $^ $(LDOPTS) -o $@
-
-test_creation_eps : test_creation_eps.o calcul_contour.o image.o eps.o
-	@echo ""
-	@echo "---------------------------------------------"
-	@echo "Creation de l'executable" $@
-	@echo "---------------------------------------------"
-	$(CC) $^ $(LDOPTS) -o $@
-
-
 
 # regle pour "nettoyer" le r�pertoire
 clean:

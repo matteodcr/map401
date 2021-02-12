@@ -54,9 +54,7 @@ void ecrire_contour_fichier(Liste_Point L);
 
 int trouver_pixel_depart(Image I, Point *P);
 
-void contour_multiple(Image I);
-
-
+void contour_multiple(Image I, char *nom_f);
 
 /* fait le contour a partir du point de coordonée(x, y) */
 Liste_Point contour(Image I, Image *Im, int x, int y, int *i);

@@ -3,7 +3,7 @@
 
 #include "geom2d.h"
 #include "image.h"
-#include <calcul_contour.h>
+#include "calcul_contour.h"
 
 FILE* initialiser_eps(char *nom_f, int xmin, int ymin, int xmax, int ymax);
 
