@@ -2,8 +2,9 @@
 #include <stdlib.h>
 
 #include "eps.h"
+#include "structures.h"
 #include "image.h"
-#include "calcul_contour.h"
+#include "contour.h"
 
 void point_courant(FILE* f, Point A){
     fprintf(f, "\n%0.f %0.f moveto\n", A.x, A.y);
@@ -37,4 +38,20 @@ void fin_eps(FILE* f){
     fprintf(f, "fill\n");
     fprintf(f, "showpage");
     fclose(f);
+}
+
+void PbmToEps(char *nom_entree, char *nom_sortie){
+    
+    Image I = lire_fichier_image_inverse(nom_entree);
+    Image Im = creer_image_masque(I);
+    FILE *f = initialiser_eps(nom_sortie, 0, 0, I.L, I.H );
+
+    Point P;
+    while(trouver_pixel_depart(Im, &P)){
+        Liste_Point L = creer_liste_Point_vide();
+        L = contour(I, &Im, P.x, P.y);
+        Tableau_Point T = sequence_points_liste_vers_tableau(L);
+        ecrire_eps(f, T);
+    }
+    fin_eps(f);
 }

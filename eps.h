@@ -2,7 +2,7 @@
 #define _EPS_H_
 
 #include "image.h"
-#include "calcul_contour.h"
+#include "contour.h"
 
 FILE* initialiser_eps(char *nom_f, int xmin, int ymin, int xmax, int ymax);
 
@@ -10,5 +10,7 @@ FILE* initialiser_eps(char *nom_f, int xmin, int ymin, int xmax, int ymax);
 void ecrire_eps(FILE *f, Tableau_Point T);
 
 void fin_eps(FILE* f);
+
+void PbmToEps(char *nom_entree, char *nom_sortie);
 
 #endif

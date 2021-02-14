@@ -1,102 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "calcul_contour.h"
+#include "structures.h"
+#include "contour.h"
 #include "image.h"
 #include "geom2d.h"
-#include "eps.h"
-
-
-Cellule_Liste_Point* creer_element_liste_Point(Point v){
-    Cellule_Liste_Point *el;
-    el = (Cellule_Liste_Point*)malloc(sizeof(Cellule_Liste_Point));
-    if (el == NULL){
-        fprintf(stderr, "creer_element_liste_Point : allocation impossible\n");
-        exit(-1);
-    }
-
-    el->data = v;
-    el->suiv = NULL;
-    return el;
-}
-
-Liste_Point creer_liste_Point_vide(){
-    Liste_Point L = {0, NULL, NULL};
-    return L;
-}
-
-void ajouter_element_liste_Point(Liste_Point *L, Point e){
-    Cellule_Liste_Point *el;
-    el = creer_element_liste_Point(e);
-
-    if(L->taille == 0){
-        L->first = L->last = el;
-    }
-    else{
-        L->last->suiv = el;
-        L->last = el;
-    }
-    L->taille++;
-}
-
-Liste_Point supprimer_liste_Point(Liste_Point L){
-    Cellule_Liste_Point *el = L.first;
-
-    while (el){
-        Cellule_Liste_Point *suiv = el->suiv;
-        free(el);
-        el = suiv;
-    }
-    L.first = L.last = NULL;
-    L.taille = 0;
-    return L;
-}
-
-Liste_Point concatener_liste_Point(Liste_Point L1, Liste_Point L2){
-    if (L1.taille == 0) return L2;
-    if (L2.taille == 0) return L1;
-
-    L1.last->suiv = L2.first;
-    L1.last = L2.last;
-    L1.taille += L2.taille;
-    return L1;
-}
-
-Tableau_Point sequence_points_liste_vers_tableau(Liste_Point L){
-    Tableau_Point T;
-
-    T.taille = L.taille;
-    T.tab = malloc(sizeof(Point)*T.taille);
-
-    if (T.tab == NULL){
-        fprintf(stderr, "sequence_points_liste_vers_tableau : allocation impossible");
-        exit(-1);
-    }
-
-    int k = 0;
-    Cellule_Liste_Point *el = L.first;
-    while(el){
-        T.tab[k] = el->data;
-        k++;
-        el = el->suiv;
-    }
-
-    return T;
-}
-
-void ecrire_contour(Liste_Point L){
-    Tableau_Point TP = sequence_points_liste_vers_tableau(L);
-    int k;
-    int nP = TP.taille;
-
-    printf("%d points : [", nP);
-    for (k = 0; k < nP; k++){
-        Point P = TP.tab[k];
-        printf(" (%5.1f, %5.1f)", P.x, P.y);
-    }
-    printf("]\n");
-    free(TP.tab);
-}
 
 void avance(Point *P, Orientation O){
     switch (O)
@@ -166,6 +74,7 @@ Orientation tourner_gauche(Orientation O){
     }
     return O;
 }
+
 Orientation nouvelle_orientation(Image I, Point P, Orientation O){
     Pixel gauche;
     Pixel droit;
@@ -230,11 +139,11 @@ void init_nb_contour(int nb_contours){
     fclose(f);
 }
 
-void formater_fichier_sortie(){
+void formater_fichier_sortie(char *nom_sortie){
    FILE *f1 = fopen("tmp1.txt", "r"); 
    FILE *f2 = fopen("tmp2.txt", "r");
   
-   FILE *f3 = fopen("resultat.contours", "w"); 
+   FILE *f3 = fopen(nom_sortie, "w"); 
    char c; 
   
    if (f1 == NULL || f2 == NULL || f3 == NULL) { 
@@ -277,6 +186,7 @@ Liste_Point contour(Image I, Image *Im, int x, int y){
     Point P = P0;
     Orientation Or = Est;
 
+    
     while(true){
         ajouter_element_liste_Point(&Liste, P);
 
@@ -295,22 +205,27 @@ Liste_Point contour(Image I, Image *Im, int x, int y){
     return Liste;
 }
 
-
-void PbmToEps(char *nom_entree, char *nom_sortie){
-    
+void PbmToFile(char *nom_entree, char* nom_sortie){
     Image I = lire_fichier_image_inverse(nom_entree);
     Image Im = creer_image_masque(I);
-    FILE *f = initialiser_eps(nom_sortie, 0, 0, I.L, I.H );
-
     Point P;
 
+    initialiser_fichier();
+
+    int i = 0;
+
     while(trouver_pixel_depart(Im, &P)){
+        i++;
         Liste_Point L = creer_liste_Point_vide();
         L = contour(I, &Im, P.x, P.y);
-        Tableau_Point T = sequence_points_liste_vers_tableau(L);
-        ecrire_eps(f, T);
+        ecrire_contour_fichier(L);
+        printf("%i\n", i);
     }
-    fin_eps(f);
+    init_nb_contour(i);
+    formater_fichier_sortie(nom_sortie);
 }
+
+
+
 
 
