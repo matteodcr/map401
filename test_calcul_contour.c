@@ -9,6 +9,6 @@ int main(int argc, char *argv[]) {
         printf("Usage : ./test_calcul_contour <nom du fichier de test>");
     }
 
-    contour_multiple(lire_fichier_image_inverse(argv[1]), argv[2]);
+    PbmToEps(argv[1], argv[2]);
     return 0;
 }

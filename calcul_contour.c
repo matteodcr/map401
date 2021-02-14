@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <calcul_contour.h>
-#include <image.h>
-#include <geom2d.h>
-#include <eps.h>
+
+#include "calcul_contour.h"
+#include "image.h"
+#include "geom2d.h"
+#include "eps.h"
 
 
 Cellule_Liste_Point* creer_element_liste_Point(Point v){
@@ -230,18 +231,15 @@ void init_nb_contour(int nb_contours){
 }
 
 void formater_fichier_sortie(){
-   // Ouvrir les deux fichiers à fusionner
    FILE *f1 = fopen("tmp1.txt", "r"); 
    FILE *f2 = fopen("tmp2.txt", "r");
   
-   // Ouvrir le fichier pour stocker le résultat
    FILE *f3 = fopen("resultat.contours", "w"); 
    char c; 
   
-   if (f1 == NULL || f2 == NULL || f3 == NULL) 
-   { 
+   if (f1 == NULL || f2 == NULL || f3 == NULL) { 
          puts("Impossible d'ouvrir les fichiers"); 
-         exit(EXIT_FAILURE);
+         exit(1);
    } 
 
    while ((c = fgetc(f2)) != EOF) 
@@ -268,26 +266,7 @@ int trouver_pixel_depart(Image I, Point *P){
     return 0;
 }
 
-
-void contour_multiple(Image I, char *nom_f){
-    Image Im = creer_image_masque(I);
-    Point P;
-    int i = 0;
-    FILE *f = initialiser_eps(nom_f, 0, 0, I.L, I.H );
-
-    initialiser_fichier();
-    while(trouver_pixel_depart(Im, &P)==1){
-        Liste_Point L = creer_liste_Point_vide();
-        L = contour(I, &Im, P.x, P.y, &i);
-
-        Tableau_Point T = sequence_points_liste_vers_tableau(L);
-        ecrire_eps(f, T);
-    }
-    fin_eps(f);
-}
-
-
-Liste_Point contour(Image I, Image *Im, int x, int y, int *i){
+Liste_Point contour(Image I, Image *Im, int x, int y){
     Point P0;
     P0.x = x-1;
     P0.y = y-1;
@@ -298,7 +277,6 @@ Liste_Point contour(Image I, Image *Im, int x, int y, int *i){
     Point P = P0;
     Orientation Or = Est;
 
-    *i = *i +1;
     while(true){
         ajouter_element_liste_Point(&Liste, P);
 
@@ -316,3 +294,23 @@ Liste_Point contour(Image I, Image *Im, int x, int y, int *i){
     }
     return Liste;
 }
+
+
+void PbmToEps(char *nom_entree, char *nom_sortie){
+    
+    Image I = lire_fichier_image_inverse(nom_entree);
+    Image Im = creer_image_masque(I);
+    FILE *f = initialiser_eps(nom_sortie, 0, 0, I.L, I.H );
+
+    Point P;
+
+    while(trouver_pixel_depart(Im, &P)){
+        Liste_Point L = creer_liste_Point_vide();
+        L = contour(I, &Im, P.x, P.y);
+        Tableau_Point T = sequence_points_liste_vers_tableau(L);
+        ecrire_eps(f, T);
+    }
+    fin_eps(f);
+}
+
+

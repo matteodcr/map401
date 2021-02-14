@@ -22,3 +22,4 @@ tmp2.txt
 test_creation_eps.o
 .gitignore
 resultat.contours
+eps.o
