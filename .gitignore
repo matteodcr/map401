@@ -26,3 +26,6 @@ test_contour.o
 test_eps
 test_eps.o
 .vscode/c_cpp_properties.json
+
+test_dist_segment_point.o
+test_dist_segment_point
