@@ -6,10 +6,6 @@ geom2d.o
 test_geom2d.o
 test_geom2d
 
-calcul_contour.o
-test_calcul_contour.o
-test_calcul_contour
-
 Tâche_1_Decorsaire_Grange.zip
 Tâche_2_Decorsaire_Grange.pdf
 Tâche_2_Decorsaire_Grange.odt
@@ -23,3 +19,10 @@ test_creation_eps.o
 .gitignore
 resultat.contours
 eps.o
+contour.o
+structures.o
+test_contour
+test_contour.o
+test_eps
+test_eps.o
+.vscode/c_cpp_properties.json
