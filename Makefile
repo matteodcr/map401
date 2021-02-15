@@ -37,7 +37,7 @@ INCLUDEOPTS = -I$(INCDIR)
 COMPILOPTS = -g -Wall $(INCLUDEOPTS)
 
 # liste des executables
-EXECUTABLES = test_image test_geom2d test_contour test_eps 
+EXECUTABLES = test_image test_geom2d test_contour test_eps test_dist_segment_point
 
 
 #############################################################################
@@ -90,6 +90,11 @@ test_eps.o : test_eps.c eps.h
 	@echo ""
 	@echo "\033[96m Compilation du module \033[0m"$*
 	$(CC) -c $(COMPILOPTS) $<
+
+test_dist_segment_point.o : test_dist_segment_point.c geom2d.h
+	@echo ""
+	@echo "\033[96m Compilation du module \033[0m"$*
+	$(CC) -c $(COMPILOPTS) $<
 		
 ########################################################
 # regles explicites de creation des executables
@@ -110,6 +115,11 @@ test_contour : test_contour.o contour.o image.o eps.o structures.o
 	$(CC) $^ $(LDOPTS) -o $@
 
 test_eps : test_eps.o eps.o contour.o image.o eps.o structures.o
+	@echo ""
+	@echo "\033[92m Creation de l'executable \033[0m" $@
+	$(CC) $^ $(LDOPTS) -o $@
+
+test_dist_segment_point : test_dist_segment_point.o geom2d.o 
 	@echo ""
 	@echo "\033[92m Creation de l'executable \033[0m" $@
 	$(CC) $^ $(LDOPTS) -o $@
