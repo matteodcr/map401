@@ -11,6 +11,7 @@ void ecrire_eps(FILE *f, Tableau_Point T);
 
 void fin_eps(FILE* f);
 
+/* Vectorise un fichier .pbm en .eps */
 void PbmToEps(char *nom_entree, char *nom_sortie);
 
 #endif

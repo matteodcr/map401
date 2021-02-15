@@ -110,10 +110,6 @@ Orientation nouvelle_orientation(Image I, Point P, Orientation O){
     return O;
 }
 
-void initialiser_fichier(){
-    remove("tmp1.txt");
-}
-
 void ecrire_contour_fichier(Liste_Point L){
     Tableau_Point TP = sequence_points_liste_vers_tableau(L);
     
@@ -146,8 +142,18 @@ void formater_fichier_sortie(char *nom_sortie){
    FILE *f3 = fopen(nom_sortie, "w"); 
    char c; 
   
-   if (f1 == NULL || f2 == NULL || f3 == NULL) { 
-         puts("Impossible d'ouvrir les fichiers"); 
+   if (f1 == NULL) { 
+         puts("Impossible d'ouvrir le fichier 1"); 
+         exit(1);
+   }
+
+   if (f2 == NULL ) { 
+         puts("Impossible d'ouvrir le fichier 2"); 
+         exit(1);
+   } 
+
+   if (f3 == NULL) { 
+         puts("Impossible d'ouvrir le fichier 3"); 
          exit(1);
    } 
 
@@ -157,8 +163,10 @@ void formater_fichier_sortie(char *nom_sortie){
    while ((c = fgetc(f1)) != EOF) 
       fputc(c, f3); 
   
-   fclose(f1); 
+   fclose(f1);
+   remove("tmp1.txt");
    fclose(f2); 
+   remove("tmp2.txt");
    fclose(f3); 
 }
 
@@ -180,7 +188,7 @@ Liste_Point contour(Image I, Image *Im, int x, int y){
     P0.x = x-1;
     P0.y = y-1;
 
-    printf("Point initial : (%.1f, %.1f)\n", P0.x, P0.y);
+    //printf("Point initial : (%.1f, %.1f)\n", P0.x, P0.y);
 
     Liste_Point Liste = creer_liste_Point_vide();
     Point P = P0;
@@ -206,20 +214,16 @@ Liste_Point contour(Image I, Image *Im, int x, int y){
 }
 
 void PbmToFile(char *nom_entree, char* nom_sortie){
-    Image I = lire_fichier_image_inverse(nom_entree);
+    Image I = lire_fichier_image(nom_entree);
     Image Im = creer_image_masque(I);
     Point P;
 
-    initialiser_fichier();
-
     int i = 0;
-
     while(trouver_pixel_depart(Im, &P)){
         i++;
         Liste_Point L = creer_liste_Point_vide();
         L = contour(I, &Im, P.x, P.y);
         ecrire_contour_fichier(L);
-        printf("%i\n", i);
     }
     init_nb_contour(i);
     formater_fichier_sortie(nom_sortie);

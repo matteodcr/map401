@@ -139,6 +139,27 @@ void entete_fichier_pbm(FILE *f)
 	} while (boucle_ligne_commentaire);
 	
 }
+
+/* Lis un caractère dans un fichier pbm 
+ - 0 => BLANC
+ - 1 => NOIR */
+Pixel determiner_couleur(FILE* f) {
+	char c;
+	while (true) {
+		if (fscanf(f, "%c", &c)) {
+			if (c == '0'){
+				return BLANC;
+			} 
+			if (c == '1'){
+				return NOIR;
+			} 
+			continue;
+		} else {
+			ERREUR_FATALE("determiner_couleur : erreur de lecture\n");
+		}
+	}
+}
+
   
 /* lire l'image dans le fichier nomm� nom_f
    s'il y a une erreur dans le fichier le programme s'arrete en affichant
@@ -160,7 +181,9 @@ Image lire_fichier_image(char *nom_f)
 	entete_fichier_pbm(f);
 	
 	/* lecture des dimensions - lecture de 2 entiers */
-    fscanf(f, "%d %d", &L, &H);
+    if (!fscanf(f, "%d %d", &L, &H)){
+		ERREUR_FATALE("lire_fichier_image : erreur lecture dimension");
+	}
 	
 	/* cr�ation de l'image I de dimensions L x H */
 	
@@ -170,17 +193,10 @@ Image lire_fichier_image(char *nom_f)
 	/* lecture des pixels du fichier - lecture caract�re par caract�re
 	   seuls les caracteres '0' (BLANC) ou '1' (NOIR) 
 	   doivent etre pris en compte */
-	char c;
-    int x, y, a;
+    int x, y;
 	for(y=1; y<=H; y++){
 		for(x=1; x<=L; x++){
-			fscanf(f, "%c", &c);
-			if (c == '0' || c == '1'){
-				a = atoi(&c);
-				set_pixel_image(I,x,y,a);	
-			} else {
-				x--;
-			}
+			set_pixel_image(I, x, y, determiner_couleur(f));
 		}
     }
 	/* fermeture du fichier */
@@ -189,6 +205,8 @@ Image lire_fichier_image(char *nom_f)
 	return I;
 }
 
+/* Inverser permet la lecture correcte dans un fichier eps 
+car l'axe des ordonnés a un sens different */
 Image lire_fichier_image_inverse(char *nom_f){
 	FILE *f;
 	UINT L,H;
@@ -203,42 +221,23 @@ Image lire_fichier_image_inverse(char *nom_f){
     fscanf(f, "%d %d", &L, &H);
 	I = creer_image(L, H);
 	
-	char c;
-    int x, y, a;
+    int x, y;
 	for(y=1; y<=H; y++){
 		for(x=1; x<=L; x++){
-			fscanf(f, "%c", &c);
-			if (c == '0' || c == '1'){
-				a = atoi(&c);
-				set_pixel_image(I,x,H-y+1,a);	
-			} else {
-				x--;
-			}
+			set_pixel_image(I,x,H-y+1,determiner_couleur(f));	
 		}
-    }
+	}
 	fclose(f);	
 	return I;
 }
 
-Image initialiser_image_blanche(Image I){
-    Image Ib;
-	Ib = creer_image(I.L, I.H);
-	
-    int x, y;
-	for(y=1; y<=I.H; y++){
-		for(x=1; x<=I.L; x++){
-			set_pixel_image(Ib,x,y,BLANC);	
-		}
-    }
-	return Ib;
-}
-
 Image creer_image_masque(Image I){
-	Image Im = initialiser_image_blanche(I);
+	Image Im = creer_image(I.L, I.H);
 
 	int x, y;
 	for(y=1; y<=I.H; y++){
 		for(x=1; x<=I.L; x++){
+
 			if (get_pixel_image(I, x, y)==NOIR 
 			&& get_pixel_image(I, x, y-1)==BLANC){
 				set_pixel_image(Im,x,y,NOIR);
