@@ -37,7 +37,7 @@ INCLUDEOPTS = -I$(INCDIR)
 COMPILOPTS = -g -Wall $(INCLUDEOPTS)
 
 # liste des executables
-EXECUTABLES = test_image test_geom2d test_contour test_eps test_dist_segment_point
+EXECUTABLES = test_image test_geom2d test_contour test_eps test_dist_segment_point test_douglas_peucker
 
 
 #############################################################################
@@ -95,6 +95,17 @@ test_dist_segment_point.o : test_dist_segment_point.c geom2d.h
 	@echo ""
 	@echo "\033[96m Compilation du module \033[0m"$*
 	$(CC) -c $(COMPILOPTS) $<
+
+simplification_contours.o : simplification_contours.c simplification_contours.h structures.h image.h eps.h
+	@echo ""
+	@echo "\033[96m Compilation du module \033[0m"$*
+	$(CC) -c $(COMPILOPTS) $<
+
+test_douglas_peucker.o : test_douglas_peucker.c simplification_contours.h structures.h
+	@echo ""
+	@echo "\033[96m Compilation du module \033[0m"$*
+	$(CC) -c $(COMPILOPTS) $<
+
 		
 ########################################################
 # regles explicites de creation des executables
@@ -123,6 +134,12 @@ test_dist_segment_point : test_dist_segment_point.o geom2d.o
 	@echo ""
 	@echo "\033[92m Creation de l'executable \033[0m" $@
 	$(CC) $^ $(LDOPTS) -o $@
+
+test_douglas_peucker : test_douglas_peucker.o simplification_contours.o structures.o eps.o image.o contour.o geom2d.o
+	@echo ""
+	@echo "\033[92m Creation de l'executable \033[0m" $@
+	$(CC) $^ $(LDOPTS) -o $@
+
 
 # regle pour "nettoyer" le r�pertoire
 clean:

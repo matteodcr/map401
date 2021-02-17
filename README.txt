@@ -11,6 +11,7 @@ GEOM2D : opérations sur des points et des vecteurs
 STRUCTURES : gère les structures Liste_Point et Tableau_Point (entièrement recopié du livret du projet)
 CONTOUR : algorithme qui determine des contours d'une images
 EPS : transforme des listes de point en fichier eps
+SIMPLIFICATION_CONTOURS : simplifie le contours avec des segments en fonction d'une valeur seuil
 
 Les images et contours sont dans le dossier `Images`
 
@@ -31,3 +32,6 @@ Pour écrire un fichier contours :
 
 Pour écrire un fichier eps :
 ./test_eps <nom fichier pbm> <nom fichier eps>
+
+Pour écrire un fichier eps simplifié :
+./test_douglas_peucker <nom fichier pbm> <nom fichier eps> <seuil>
