@@ -3,6 +3,7 @@
 #include<string.h>
 #include"types_macros.h"
 #include"geom2d.h"
+#include"bezier.h"
 
 Point set_point(double x, double y){
     Point P;
@@ -85,4 +86,19 @@ double distance_point_segment(Point P, Segment S){
     else {
         return dist_points(S.B, P);
     }
+}
+
+Point point_bezier2(Bezier2 B, double t){
+    double a = (1-t)*(1-t);
+    double b = 2*t*(1-t);
+    double c = t*t;
+    Point P = add_point(mult_point(a, B.C0), mult_point(b, B.C1));
+    P = add_point(P, mult_point(c, B.C2));
+
+    return P;
+}
+
+double distance_point_bezier2(Point P, Bezier2 B, float t){
+    Point C = point_bezier2(B, t);
+    return dist_points(P, C);
 }

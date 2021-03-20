@@ -29,3 +29,10 @@ test_eps.o
 
 test_dist_segment_point.o
 test_dist_segment_point
+bezier.o
+test_approx2
+test_approx2.o
+test_dist_segment_point
+.gitignore
+test_douglas_peucker
+test_douglas_peucker.o

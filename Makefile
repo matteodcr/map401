@@ -37,7 +37,7 @@ INCLUDEOPTS = -I$(INCDIR)
 COMPILOPTS = -g -Wall $(INCLUDEOPTS)
 
 # liste des executables
-EXECUTABLES = test_image test_geom2d test_contour test_eps test_dist_segment_point test_douglas_peucker
+EXECUTABLES = test_image test_geom2d test_contour test_eps test_dist_segment_point test_douglas_peucker test_approx2
 
 
 #############################################################################
@@ -106,7 +106,16 @@ test_douglas_peucker.o : test_douglas_peucker.c simplification_contours.h struct
 	@echo "\033[96m Compilation du module \033[0m"$*
 	$(CC) -c $(COMPILOPTS) $<
 
-		
+bezier.o : bezier.c bezier.h geom2d.h
+	@echo ""
+	@echo "\033[96m Compilation du module \033[0m"$*
+	$(CC) -c $(COMPILOPTS) $<
+
+test_approx2.o : test_approx2.c bezier.h geom2d.h structures.h
+	@echo ""
+	@echo "\033[96m Compilation du module \033[0m"$*
+	$(CC) -c $(COMPILOPTS) $<
+	
 ########################################################
 # regles explicites de creation des executables
 
@@ -136,6 +145,11 @@ test_dist_segment_point : test_dist_segment_point.o geom2d.o
 	$(CC) $^ $(LDOPTS) -o $@
 
 test_douglas_peucker : test_douglas_peucker.o simplification_contours.o structures.o eps.o image.o contour.o geom2d.o
+	@echo ""
+	@echo "\033[92m Creation de l'executable \033[0m" $@
+	$(CC) $^ $(LDOPTS) -o $@
+
+test_approx2 : test_approx2.o bezier.o geom2d.o structures.o
 	@echo ""
 	@echo "\033[92m Creation de l'executable \033[0m" $@
 	$(CC) $^ $(LDOPTS) -o $@
