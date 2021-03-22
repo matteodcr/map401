@@ -7,7 +7,7 @@
 
 int main(int argc, char *argv[]) {
     if (argc != 3){
-        printf("Usage : ./test_calcul_contour <nom du fichier pbm> <nom du fichier .contours");
+        printf("Usage : ./test_contour <nom du fichier pbm> <nom du fichier .contours");
         return 0;
     }
 

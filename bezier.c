@@ -19,8 +19,8 @@ Bezier2 approx_bezier2(Tableau_Point P, int j1, int j2){
 
     } else if (n >= 2){
         float n_reel = (float)n;
-        float alpha = (3*n_reel)/(n_reel*n_reel -1);
-        float beta = (1- 2*(n_reel))/(2*(n_reel+1));
+        float alpha = (3.*n_reel)/(n_reel*n_reel -1.);
+        float beta = (1.- (2.*n_reel))/(2.*(n_reel+1.));
 
         Point Cx = set_point(0, 0);
 
@@ -34,19 +34,19 @@ Bezier2 approx_bezier2(Tableau_Point P, int j1, int j2){
     ERREUR_FATALE("n=0")
 }
 
-Liste_Point simplification_douglas_peucker_bezier2(Tableau_Point T, int j1, int j2, double d){
-    Bezier2 B = approx_bezier2(T, j1, j2);
+Liste_Bezier3 simplification_douglas_peucker_bezier2(Tableau_Point T, int j1, int j2, double d){
+    Bezier2 B2 = approx_bezier2(T, j1, j2);
     
     int n = j2-j1;
     double dmax = 0;
     int k = j1;
 
-    Liste_Point Liste = creer_liste_Point_vide();
+    Liste_Bezier3 Liste = creer_liste_Bezier3_vide();
     
     for (int j=j1+1; j<=j2; j++){
         int i = j-j1;
         float ti = (float)i/(float)n;
-        double dj = distance_point_bezier2(T.tab[j], B, ti);
+        double dj = distance_point_bezier2(T.tab[j], B2, ti);
         if (dmax < dj){
             dmax = dj;
             k = j;
@@ -54,12 +54,11 @@ Liste_Point simplification_douglas_peucker_bezier2(Tableau_Point T, int j1, int 
     }
     
     if (dmax <= d){
-        ajouter_element_liste_Point(&Liste, B.C0);
-        ajouter_element_liste_Point(&Liste, B.C1);
-        ajouter_element_liste_Point(&Liste, B.C2);
+        Bezier3 B3 = Bezier2ToBezier3(B2);
+        ajouter_element_liste_Bezier3(&Liste, B3);
     }
     else{
-        Liste = concatener_liste_Point(simplification_douglas_peucker_bezier2(T, j1, k, d), simplification_douglas_peucker_bezier2(T, k, j2, d));
+        Liste = concatener_liste_Bezier3(simplification_douglas_peucker_bezier2(T, j1, k, d), simplification_douglas_peucker_bezier2(T, k, j2, d));
     }
     return Liste;
 }

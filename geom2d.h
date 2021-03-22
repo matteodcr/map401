@@ -22,6 +22,13 @@ typedef struct Bezier2_{
     Point C2;
 } Bezier2;
 
+typedef struct Bezier3_{
+    Point C0;
+    Point C1;
+    Point C2;
+    Point C3;
+} Bezier3;
+
 /* cree le point de coordonées (x,y) */ 
 Point set_point(double x, double y);
 
@@ -52,5 +59,7 @@ double distance_point_segment(Point P, Segment V);
 Segment init_segment(Point A, Point B);
 
 double distance_point_bezier2(Point P, Bezier2 B, float t);
+
+Bezier3 Bezier2ToBezier3(Bezier2 B2);
 
 #endif 

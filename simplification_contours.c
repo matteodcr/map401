@@ -44,7 +44,7 @@ void PbmToEps_simplification_segment(char *nom_entree, char *nom_sortie, double 
         Tableau_Point T = sequence_points_liste_vers_tableau(L);
         L = simplification_douglas_peucker(T, 0, T.taille-1, d);
         T = sequence_points_liste_vers_tableau(L);
-        ecrire_eps(f, T);
+        ecrire_eps_point(f, T);
     }
     fin_eps(f);
 }

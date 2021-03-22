@@ -89,8 +89,8 @@ double distance_point_segment(Point P, Segment S){
 }
 
 Point point_bezier2(Bezier2 B, double t){
-    double a = (1-t)*(1-t);
-    double b = 2*t*(1-t);
+    double a = (1.-t)*(1.-t);
+    double b = 2.*t*(1.-t);
     double c = t*t;
     Point P = add_point(mult_point(a, B.C0), mult_point(b, B.C1));
     P = add_point(P, mult_point(c, B.C2));
@@ -101,4 +101,14 @@ Point point_bezier2(Bezier2 B, double t){
 double distance_point_bezier2(Point P, Bezier2 B, float t){
     Point C = point_bezier2(B, t);
     return dist_points(P, C);
+}
+
+Bezier3 Bezier2ToBezier3(Bezier2 B2){
+    Bezier3 B3;
+    B3.C0 = B2.C0;
+    B3.C1 = add_point(mult_point(2./3., B2.C1), mult_point(1./3., B2.C0));
+    B3.C2 = add_point(mult_point(2./3., B2.C1), mult_point(1./3., B2.C2));
+    B3.C3 = B2.C2;
+
+    return B3;
 }

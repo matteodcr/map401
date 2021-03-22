@@ -37,7 +37,7 @@ INCLUDEOPTS = -I$(INCDIR)
 COMPILOPTS = -g -Wall $(INCLUDEOPTS)
 
 # liste des executables
-EXECUTABLES = test_image test_geom2d test_contour test_eps test_dist_segment_point test_douglas_peucker test_approx2
+EXECUTABLES = test_image test_geom2d test_contour test_eps test_dist_segment_point test_douglas_peucker test_approx2 test_douglas_peucker_bezier2
 
 
 #############################################################################
@@ -84,7 +84,7 @@ test_contour.o : test_contour.c image.h
 	@echo "\033[96m Compilation du module \033[0m"$*
 	$(CC) -c $(COMPILOPTS) $<
 
-eps.o : eps.c eps.h contour.h image.h
+eps.o : eps.c eps.h contour.h image.h bezier.h
 
 test_eps.o : test_eps.c eps.h
 	@echo ""
@@ -101,7 +101,7 @@ simplification_contours.o : simplification_contours.c simplification_contours.h 
 	@echo "\033[96m Compilation du module \033[0m"$*
 	$(CC) -c $(COMPILOPTS) $<
 
-test_douglas_peucker.o : test_douglas_peucker.c simplification_contours.h structures.h
+test_douglas_peucker.o : test_douglas_peucker.c simplification_contours.h structures.h bezier.h geom2d.h
 	@echo ""
 	@echo "\033[96m Compilation du module \033[0m"$*
 	$(CC) -c $(COMPILOPTS) $<
@@ -112,6 +112,11 @@ bezier.o : bezier.c bezier.h geom2d.h
 	$(CC) -c $(COMPILOPTS) $<
 
 test_approx2.o : test_approx2.c bezier.h geom2d.h structures.h
+	@echo ""
+	@echo "\033[96m Compilation du module \033[0m"$*
+	$(CC) -c $(COMPILOPTS) $<
+
+test_douglas_peucker_bezier2.o : test_douglas_peucker_bezier2.c eps.h structures.h
 	@echo ""
 	@echo "\033[96m Compilation du module \033[0m"$*
 	$(CC) -c $(COMPILOPTS) $<
@@ -129,12 +134,12 @@ test_geom2d : test_geom2d.o geom2d.o
 	@echo "\033[92m Creation de l'executable \033[0m" $@
 	$(CC) $^ $(LDOPTS) -o $@
 
-test_contour : test_contour.o contour.o image.o eps.o structures.o
+test_contour : test_contour.o contour.o image.o structures.o
 	@echo ""
 	@echo "\033[92m Creation de l'executable \033[0m" $@
 	$(CC) $^ $(LDOPTS) -o $@
 
-test_eps : test_eps.o eps.o contour.o image.o eps.o structures.o
+test_eps : test_eps.o eps.o contour.o image.o eps.o structures.o bezier.o geom2d.o
 	@echo ""
 	@echo "\033[92m Creation de l'executable \033[0m" $@
 	$(CC) $^ $(LDOPTS) -o $@
@@ -144,12 +149,17 @@ test_dist_segment_point : test_dist_segment_point.o geom2d.o
 	@echo "\033[92m Creation de l'executable \033[0m" $@
 	$(CC) $^ $(LDOPTS) -o $@
 
-test_douglas_peucker : test_douglas_peucker.o simplification_contours.o structures.o eps.o image.o contour.o geom2d.o
+test_douglas_peucker : test_douglas_peucker.o simplification_contours.o structures.o eps.o image.o contour.o geom2d.o bezier.o
 	@echo ""
 	@echo "\033[92m Creation de l'executable \033[0m" $@
 	$(CC) $^ $(LDOPTS) -o $@
 
 test_approx2 : test_approx2.o bezier.o geom2d.o structures.o
+	@echo ""
+	@echo "\033[92m Creation de l'executable \033[0m" $@
+	$(CC) $^ $(LDOPTS) -o $@
+
+test_douglas_peucker_bezier2 : test_douglas_peucker_bezier2.o eps.o structures.o image.o contour.o geom2d.o bezier.o
 	@echo ""
 	@echo "\033[92m Creation de l'executable \033[0m" $@
 	$(CC) $^ $(LDOPTS) -o $@

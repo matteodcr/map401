@@ -5,13 +5,18 @@
 #include "structures.h"
 #include "image.h"
 #include "contour.h"
+#include "bezier.h"
 
 void point_courant(FILE* f, Point A){
-    fprintf(f, "\n%0.f %0.f moveto\n", A.x, A.y);
+    fprintf(f, "\n%f %f moveto\n", A.x, A.y);
 }
 
 void tracer_segment(FILE *f, Point B){
-    fprintf(f, "%0.f %0.f lineto\n",B.x, B.y);
+    fprintf(f, "%f %f lineto\n",B.x, B.y);
+}
+
+void tracer_courbe(FILE *f, Bezier3 B){
+    fprintf(f, "%f %f %f %f %f %f curveto\n",B.C1.x, B.C1.y, B.C2.x, B.C2.y, B.C3.x, B.C3.y);
 }
 
 FILE* initialiser_eps(char *nom_f, int xmin, int ymin, int xmax, int ymax){ 
@@ -27,10 +32,17 @@ FILE* initialiser_eps(char *nom_f, int xmin, int ymin, int xmax, int ymax){
     return f;
 }
 
-void ecrire_eps(FILE *f, Tableau_Point T){
+void ecrire_eps_point(FILE *f, Tableau_Point T){
     point_courant(f, T.tab[0]);
     for (int i=1; i<T.taille-1; i++){
         tracer_segment(f, T.tab[i]);
+    }
+}
+
+void ecrire_eps_Bezier(FILE *f, Tableau_Bezier3 T){
+    point_courant(f, T.tab[0].C0);
+    for (int i=0; i<T.taille; i++){
+        tracer_courbe(f, T.tab[i]);
     }
 }
 
@@ -51,7 +63,25 @@ void PbmToEps(char *nom_entree, char *nom_sortie){
         Liste_Point L = creer_liste_Point_vide();
         L = contour(I, &Im, P.x, P.y);
         Tableau_Point T = sequence_points_liste_vers_tableau(L);
-        ecrire_eps(f, T);
+        ecrire_eps_point(f, T);
+    }
+    fin_eps(f);
+}
+
+void PbmToEps_Bezier2(char *nom_entree, char *nom_sortie, double d){
+    
+    Image I = lire_fichier_image_inverse(nom_entree);
+    Image Im = creer_image_masque(I);
+    FILE *f = initialiser_eps(nom_sortie, 0, 0, I.L, I.H );
+
+    Point P;
+    while(trouver_pixel_depart(Im, &P)){
+        Liste_Point L = creer_liste_Point_vide();
+        L = contour(I, &Im, P.x, P.y);
+        Tableau_Point T = sequence_points_liste_vers_tableau(L);
+        Liste_Bezier3 LB = simplification_douglas_peucker_bezier2(T, 0, T.taille-1, d);
+        Tableau_Bezier3 TB = sequence_bezier3_liste_vers_tableau(LB);
+        ecrire_eps_Bezier(f, TB);
     }
     fin_eps(f);
 }
