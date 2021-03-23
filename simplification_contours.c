@@ -38,13 +38,21 @@ void PbmToEps_simplification_segment(char *nom_entree, char *nom_sortie, double 
     Image Im = creer_image_masque(I);
     FILE *f = initialiser_eps(nom_sortie, 0, 0, I.L, I.H );
     Point P;
+    int nb_av = 0;
+    int nb_ap = 0;
+    int nb_contours = 0;
     while(trouver_pixel_depart(Im, &P)){
+        nb_contours++;
         Liste_Point L = creer_liste_Point_vide();
         L = contour(I, &Im, P.x, P.y);
         Tableau_Point T = sequence_points_liste_vers_tableau(L);
+        nb_av += T.taille;
         L = simplification_douglas_peucker(T, 0, T.taille-1, d);
         T = sequence_points_liste_vers_tableau(L);
         ecrire_eps(f, T);
     }
+    printf("Nombre de segments avant simplification : %d\n", nb_av-nb_contours);
+    printf("Nombre de segments après simplification : %d, seuil = %f\n", nb_ap, d);
+        
     fin_eps(f);
 }
