@@ -19,4 +19,6 @@ void PbmToEps(char *nom_entree, char *nom_sortie);
 
 void PbmToEps_Bezier2(char *nom_entree, char *nom_sortie, double d);
 
+void PbmToEps_Bezier3(char *nom_entree, char *nom_sortie, double d);
+
 #endif

@@ -103,6 +103,23 @@ double distance_point_bezier2(Point P, Bezier2 B, float t){
     return dist_points(P, C);
 }
 
+Point point_bezier3(Bezier3 B, double t){
+    double a = (1.-t)*(1.-t)*(1.-t);
+    double b = 3.*t*(1.-t)*(1.-t);
+    double c = 3.*t*t*(1.-t);
+    double d = t*t*t;
+    Point P = add_point(mult_point(a, B.C0), mult_point(b, B.C1));
+    P = add_point(P, mult_point(c, B.C2));
+    P = add_point(P, mult_point(d, B.C3));
+
+    return P;
+}
+
+double distance_point_bezier3(Point P, Bezier3 B, float t){
+    Point C = point_bezier3(B, t);
+    return dist_points(P, C);
+}
+
 Bezier3 Bezier2ToBezier3(Bezier2 B2){
     Bezier3 B3;
     B3.C0 = B2.C0;

@@ -60,6 +60,12 @@ Segment init_segment(Point A, Point B);
 
 double distance_point_bezier2(Point P, Bezier2 B, float t);
 
+double distance_point_bezier3(Point P, Bezier3 B, float t);
+
 Bezier3 Bezier2ToBezier3(Bezier2 B2);
+
+Point point_bezier2(Bezier2 B, double t);
+
+Point point_bezier3(Bezier3 B, double t);
 
 #endif 

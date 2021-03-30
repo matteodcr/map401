@@ -85,3 +85,24 @@ void PbmToEps_Bezier2(char *nom_entree, char *nom_sortie, double d){
     }
     fin_eps(f);
 }
+
+void PbmToEps_Bezier3(char *nom_entree, char *nom_sortie, double d){ 
+    
+    Image I = lire_fichier_image_inverse(nom_entree);
+    Image Im = creer_image_masque(I);
+    FILE *f = initialiser_eps(nom_sortie, 0, 0, I.L, I.H );
+
+    Point P;
+    int i = 0;
+    while(trouver_pixel_depart(Im, &P)){
+        Liste_Point L = creer_liste_Point_vide();
+        L = contour(I, &Im, P.x, P.y);
+        Tableau_Point T = sequence_points_liste_vers_tableau(L);
+        Liste_Bezier3 LB = simplification_douglas_peucker_bezier3(T, 0, T.taille-1, d);
+        Tableau_Bezier3 TB = sequence_bezier3_liste_vers_tableau(LB);
+        i += TB.taille;
+        ecrire_eps_Bezier(f, TB);
+    }
+    printf("Nb de courbes de bézier 3 : %d\n", i);
+    fin_eps(f);
+}
