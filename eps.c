@@ -74,6 +74,9 @@ void PbmToEps_Bezier2(char *nom_entree, char *nom_sortie, double d){
     Image Im = creer_image_masque(I);
     FILE *f = initialiser_eps(nom_sortie, 0, 0, I.L, I.H );
 
+    int nb_bezier = 0;
+    int nb_contour = 0;
+
     Point P;
     while(trouver_pixel_depart(Im, &P)){
         Liste_Point L = creer_liste_Point_vide();
@@ -81,7 +84,11 @@ void PbmToEps_Bezier2(char *nom_entree, char *nom_sortie, double d){
         Tableau_Point T = sequence_points_liste_vers_tableau(L);
         Liste_Bezier3 LB = simplification_douglas_peucker_bezier2(T, 0, T.taille-1, d);
         Tableau_Bezier3 TB = sequence_bezier3_liste_vers_tableau(LB);
+        nb_bezier = nb_bezier + TB.taille;
         ecrire_eps_Bezier(f, TB);
+        nb_contour++;
     }
+    printf("Nombre de bézier2 : %d\n", nb_bezier);
+    printf("Nombre de contours : %d\n", nb_contour);
     fin_eps(f);
 }
