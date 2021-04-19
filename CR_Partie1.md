@@ -68,7 +68,8 @@ Point point_bezier2(Bezier2 B, double t);
 Bezier2 approx_bezier2(Tableau_Point P, int j1, int j2);
 
 // algo de douglas peucker
-Liste_Bezier3 simplification_douglas_peucker_bezier2(Tableau_Point T, int j1, int j2, double d);
+Liste_Bezier3 simplification_douglas_peucker_bezier2(
+    Tableau_Point T, int j1, int j2, double d);
 
 ```
 
@@ -95,7 +96,8 @@ void PbmToEps_Bezier2(char *nom_entree, char *nom_sortie, double d);
 
 int main(int argc, char *argv[]) {
     if (argc != 9 && argc != 7 && argc != 3){
-        printf("Usage : ./test_approx2 <j1> <j2> <Q0x> <Q0y> <Q1x> <Q1y> <Q2x> <Q2y> \n ou bien ./test_approx2 <1> <P0x> <P0y> <P1x> <P1y> ou bien on prend n=8 pour avoir l'exemple du cours");
+        printf("Usage : ./test_approx2 <j1> <j2> <Q0x> <Q0y> <Q1x> <Q1y> <Q2x> <Q2y> \n ou bien //
+        ./test_approx2 <1> <P0x> <P0y> <P1x> <P1y> ou bien on prend n=8 pour avoir l'exemple du cours");
         return 0;
     }
 
@@ -184,6 +186,6 @@ int main(int argc, char *argv[]) {
 
 | Image |d=1|d=3|d=10|d=15|
 |-----|----|-----|----|---|
-|Asterix3 : Contour = 32 | Bezier2 = 962 | Bezier2 = 295 | Bezier2 = 161 | Bezier2 = 70 |
-|lettre-L-cursive : Contour = 3 | Bezier2 = 252 | Bezier2 = 42 | Bezier2 = 27 | Bezier2 = 16 |
-|Picasso-ColombesDeLaPaix : Contour = 106 | Bezier2 = 1601 | Bezier2 = 589 | Bezier2 = 306 | Bezier2 = 154 |
+|Asterix3 : C=32 | Bezier2 = 962 | Bezier2 = 295 | Bezier2 = 161 | Bezier2 = 70 |
+|L-cursive : C=3 | Bezier2 = 252 | Bezier2 = 42 | Bezier2 = 27 | Bezier2 = 16 |
+|ColombesDeLaPaix : C=106 | Bezier2 = 1601 | Bezier2 = 589 | Bezier2 = 306 | Bezier2 = 154 |
