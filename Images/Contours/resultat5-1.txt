@@ -1,0 +1,35 @@
+Bugs_Bunny.pbm
+    Contours : 62
+    Segments : 13166
+
+animaux.pbm
+    Contours : 62
+    Segments : 34376
+
+dessin-delius.pbm
+    Contours : 814
+    Segments : 34376
+
+Charlot.pbm
+    Contours : 33
+    Segments : 9032
+
+damier_4_5_1.pbm
+    Contours : 2
+    Segments : 32
+
+gai-luron.pbm
+    Contours : 375
+    Segments : 87636
+
+Pink_Panther.pbm
+    Contours : 38
+    Segments : 32028
+
+deux_des.pbm
+    Contours : 38
+    Segments : 11124
+
+papillon2.pbm
+    Contours : 139
+    Segments : 18208

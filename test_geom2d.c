@@ -30,6 +30,7 @@ int main(int argc, char *argv[]) {
     printf("Distance entre A et B : %f\n", dist_points(A, B));
     printf("======\n");
 
+    Segment segAB = init_segment(A, B);
     Vecteur AB = vect_bipoint(A, B);
     Vecteur CD = vect_bipoint(C, D);
     printf("Vecteur AB : (%.0f, %.0f)\n", AB.x, AB.y);
@@ -37,8 +38,9 @@ int main(int argc, char *argv[]) {
     printf("Somme des vecteurs AB et CD : (%.0f, %.0f)\n", somme_vect(AB, CD).x, somme_vect(AB, CD).y);
     printf("Produit de AB par 3 : (%.0f, %.0f)\n", produit_reel_vect(3, AB).x, produit_reel_vect(3, AB).y);
     printf("Produit de AB par C : (%.0f, %.0f)\n", produit_point_vect(C, AB).x, produit_point_vect(C, AB).y);
-    printf("Produit scalaire de AB et CD : %d\n", produit_scalaire(AB, CD));
-    printf("Norme du vecteur AB : %f\n", norme_vect(AB));
+    printf("Produit scalaire de AB et CD : %f\n", produit_scalaire(AB, CD));
+    printf("Norme du vecteur AB : %.0f\n", norme_vect(AB));
+    printf("Distance entre AB et C : %.4f\n", distance_point_segment(C, segAB));
     
     
     return 0;

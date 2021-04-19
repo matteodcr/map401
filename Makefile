@@ -37,7 +37,7 @@ INCLUDEOPTS = -I$(INCDIR)
 COMPILOPTS = -g -Wall $(INCLUDEOPTS)
 
 # liste des executables
-EXECUTABLES = test_image test_geom2d test_calcul_contour test_creation_eps
+EXECUTABLES = test_image test_geom2d test_contour test_eps test_dist_segment_point test_douglas_peucker_bezier1 test_approx2 test_douglas_peucker_bezier2 test_approx3 test_douglas_peucker_bezier3
 
 
 #############################################################################
@@ -55,95 +55,129 @@ all : $(EXECUTABLES)
 #		$(CC) -c $(COMPILOPTS) module.c
 %.o : %.c %.h
 	@echo ""
-	@echo "---------------------------------------------"
-	@echo "Compilation du module "$*
-	@echo "---------------------------------------------"
+	@echo "\033[96m Compilation du module \033[0m"$*
 	$(CC) -c $(COMPILOPTS) $<
 
 ########################################################
 # regles explicites de compilation separee de modules
 # n'ayant pas de fichier .h ET/OU dependant d'autres modules
 image.o : image.c image.h types_macros.h
-	@echo ""
-	@echo "---------------------------------------------"
-	@echo "Compilation du module image"
-	@echo "---------------------------------------------"
-	$(CC) -c $(COMPILOPTS) $<
 
 test_image.o : test_image.c image.h 
 	@echo ""
-	@echo "---------------------------------------------"
-	@echo "Compilation du module test_image"
-	@echo "---------------------------------------------"
+	@echo "\033[96m Compilation du module \033[0m"$*
 	$(CC) -c $(COMPILOPTS) $<
 
 geom2d.o : geom2d.c geom2d.h
-	@echo ""
-	@echo "---------------------------------------------"
-	@echo "Compilation du module geom2d"
-	@echo "---------------------------------------------"
-	$(CC) -c $(COMPILOPTS) $<
 
 test_geom2d.o : test_geom2d.c geom2d.h
 	@echo ""
-	@echo "---------------------------------------------"
-	@echo "Compilation du module test_geom2d"
-	@echo "---------------------------------------------"
+	@echo "\033[96m Compilation du module \033[0m"$*
 	$(CC) -c $(COMPILOPTS) $<
 
-calcul_contour.o : calcul_contour.c calcul_contour.h image.h
+structures.o : structures.c structures.h
+
+contour.o : contour.c contour.h image.h eps.h structures.h
+
+test_contour.o : test_contour.c image.h
 	@echo ""
-	@echo "---------------------------------------------"
-	@echo "Compilation du module calcul_contour"
-	@echo "---------------------------------------------"
+	@echo "\033[96m Compilation du module \033[0m"$*
 	$(CC) -c $(COMPILOPTS) $<
 
-test_calcul_contour.o : test_calcul_contour.c calcul_contour.h image.h
+eps.o : eps.c eps.h contour.h image.h bezier.h
+
+test_eps.o : test_eps.c eps.h
 	@echo ""
-	@echo "---------------------------------------------"
-	@echo "Compilation du module test_calcul_contour"
-	@echo "---------------------------------------------"
+	@echo "\033[96m Compilation du module \033[0m"$*
 	$(CC) -c $(COMPILOPTS) $<
 
-test_creation_eps.o : test_creation_eps.c calcul_contour.h image.h
+bezier.o : bezier.c bezier.h geom2d.h
 	@echo ""
-	@echo "---------------------------------------------"
-	@echo "Compilation du module test_creation_eps"
-	@echo "---------------------------------------------"
+	@echo "\033[96m Compilation du module \033[0m"$*
 	$(CC) -c $(COMPILOPTS) $<
-		
-		
+
+test_dist_segment_point.o : test_dist_segment_point.c geom2d.h
+	@echo ""
+	@echo "\033[96m Compilation du module \033[0m"$*
+	$(CC) -c $(COMPILOPTS) $<
+
+test_douglas_peucker_bezier1.o : test_douglas_peucker_bezier1.c bezier.h structures.h bezier.h geom2d.h
+	@echo ""
+	@echo "\033[96m Compilation du module \033[0m"$*
+	$(CC) -c $(COMPILOPTS) $<
+
+test_approx2.o : test_approx2.c bezier.h geom2d.h structures.h
+	@echo ""
+	@echo "\033[96m Compilation du module \033[0m"$*
+	$(CC) -c $(COMPILOPTS) $<
+
+test_douglas_peucker_bezier2.o : test_douglas_peucker_bezier2.c eps.h structures.h
+	@echo ""
+	@echo "\033[96m Compilation du module \033[0m"$*
+	$(CC) -c $(COMPILOPTS) $<
+	
+test_approx3.o : test_approx3.c bezier.h geom2d.h structures.h
+	@echo ""
+	@echo "\033[96m Compilation du module \033[0m"$*
+	$(CC) -c $(COMPILOPTS) $<
+
+test_douglas_peucker_bezier3.o : test_douglas_peucker_bezier3.c eps.h structures.h
+	@echo ""
+	@echo "\033[96m Compilation du module \033[0m"$*
+	$(CC) -c $(COMPILOPTS) $<
+
 ########################################################
 # regles explicites de creation des executables
 
 test_image : test_image.o image.o 
 	@echo ""
-	@echo "---------------------------------------------"
-	@echo "Creation de l'executable" $@
-	@echo "---------------------------------------------"
+	@echo "\033[92m Creation de l'executable \033[0m" $@
 	$(CC) $^ $(LDOPTS) -o $@
 
 test_geom2d : test_geom2d.o geom2d.o 
 	@echo ""
-	@echo "---------------------------------------------"
-	@echo "Creation de l'executable" $@
-	@echo "---------------------------------------------"
+	@echo "\033[92m Creation de l'executable \033[0m" $@
 	$(CC) $^ $(LDOPTS) -o $@
 
-test_calcul_contour : test_calcul_contour.o calcul_contour.o image.o
+test_contour : test_contour.o contour.o image.o structures.o
 	@echo ""
-	@echo "---------------------------------------------"
-	@echo "Creation de l'executable" $@
-	@echo "---------------------------------------------"
+	@echo "\033[92m Creation de l'executable \033[0m" $@
 	$(CC) $^ $(LDOPTS) -o $@
 
-test_creation_eps : test_creation_eps.o calcul_contour.o image.o
+test_eps : test_eps.o eps.o contour.o image.o eps.o structures.o bezier.o geom2d.o
 	@echo ""
-	@echo "---------------------------------------------"
-	@echo "Creation de l'executable" $@
-	@echo "---------------------------------------------"
+	@echo "\033[92m Creation de l'executable \033[0m" $@
 	$(CC) $^ $(LDOPTS) -o $@
 
+test_dist_segment_point : test_dist_segment_point.o geom2d.o 
+	@echo ""
+	@echo "\033[92m Creation de l'executable \033[0m" $@
+	$(CC) $^ $(LDOPTS) -o $@
+
+test_douglas_peucker_bezier1 : test_douglas_peucker_bezier1.o bezier.o structures.o eps.o image.o contour.o geom2d.o bezier.o
+	@echo ""
+	@echo "\033[92m Creation de l'executable \033[0m" $@
+	$(CC) $^ $(LDOPTS) -o $@
+
+test_approx2 : test_approx2.o bezier.o geom2d.o structures.o
+	@echo ""
+	@echo "\033[92m Creation de l'executable \033[0m" $@
+	$(CC) $^ $(LDOPTS) -o $@
+
+test_douglas_peucker_bezier2 : test_douglas_peucker_bezier2.o eps.o structures.o image.o contour.o geom2d.o bezier.o
+	@echo ""
+	@echo "\033[92m Creation de l'executable \033[0m" $@
+	$(CC) $^ $(LDOPTS) -o $@
+
+test_approx3 : test_approx3.o bezier.o geom2d.o structures.o
+	@echo ""
+	@echo "\033[92m Creation de l'executable \033[0m" $@
+	$(CC) $^ $(LDOPTS) -o $@
+
+test_douglas_peucker_bezier3 : test_douglas_peucker_bezier3.o eps.o structures.o image.o contour.o geom2d.o bezier.o
+	@echo ""
+	@echo "\033[92m Creation de l'executable \033[0m" $@
+	$(CC) $^ $(LDOPTS) -o $@
 
 
 # regle pour "nettoyer" le r�pertoire
