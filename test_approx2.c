@@ -8,7 +8,7 @@
 
 int main(int argc, char *argv[]) {
     if (argc != 9 && argc != 7 && argc != 3){
-        printf("Usage : ./test_approx2 <j1> <j2> <Q0x> <Q0y> <Q1x> <Q1y> <Q2x> <Q2y> \n ou bien ./test_approx2 <1> <P0x> <P0y> <P1x> <P1y>\n");
+        printf("Usage : Voir README.md\n");
         return 0;
     }
 

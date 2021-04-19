@@ -6,6 +6,7 @@
 int main(int argc, char *argv[]) {
     if (argc != 7){
         printf("Usage : ./test_dist_segment_point <x, y Point A> <x, y Point B> <x, y Point C>\n");
+        exit(1);
     }
     
     //Création de 3 points

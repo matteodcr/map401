@@ -37,7 +37,7 @@ INCLUDEOPTS = -I$(INCDIR)
 COMPILOPTS = -g -Wall $(INCLUDEOPTS)
 
 # liste des executables
-EXECUTABLES = test_image test_geom2d test_contour test_eps test_dist_segment_point test_douglas_peucker test_approx2 test_douglas_peucker_bezier2 test_approx3 test_douglas_peucker_bezier3
+EXECUTABLES = test_image test_geom2d test_contour test_eps test_dist_segment_point test_douglas_peucker_bezier1 test_approx2 test_douglas_peucker_bezier2 test_approx3 test_douglas_peucker_bezier3
 
 
 #############################################################################
@@ -91,22 +91,17 @@ test_eps.o : test_eps.c eps.h
 	@echo "\033[96m Compilation du module \033[0m"$*
 	$(CC) -c $(COMPILOPTS) $<
 
+bezier.o : bezier.c bezier.h geom2d.h
+	@echo ""
+	@echo "\033[96m Compilation du module \033[0m"$*
+	$(CC) -c $(COMPILOPTS) $<
+
 test_dist_segment_point.o : test_dist_segment_point.c geom2d.h
 	@echo ""
 	@echo "\033[96m Compilation du module \033[0m"$*
 	$(CC) -c $(COMPILOPTS) $<
 
-simplification_contours.o : simplification_contours.c simplification_contours.h structures.h image.h eps.h
-	@echo ""
-	@echo "\033[96m Compilation du module \033[0m"$*
-	$(CC) -c $(COMPILOPTS) $<
-
-test_douglas_peucker.o : test_douglas_peucker.c simplification_contours.h structures.h bezier.h geom2d.h
-	@echo ""
-	@echo "\033[96m Compilation du module \033[0m"$*
-	$(CC) -c $(COMPILOPTS) $<
-
-bezier.o : bezier.c bezier.h geom2d.h
+test_douglas_peucker_bezier1.o : test_douglas_peucker_bezier1.c bezier.h structures.h bezier.h geom2d.h
 	@echo ""
 	@echo "\033[96m Compilation du module \033[0m"$*
 	$(CC) -c $(COMPILOPTS) $<
@@ -159,7 +154,7 @@ test_dist_segment_point : test_dist_segment_point.o geom2d.o
 	@echo "\033[92m Creation de l'executable \033[0m" $@
 	$(CC) $^ $(LDOPTS) -o $@
 
-test_douglas_peucker : test_douglas_peucker.o simplification_contours.o structures.o eps.o image.o contour.o geom2d.o bezier.o
+test_douglas_peucker_bezier1 : test_douglas_peucker_bezier1.o bezier.o structures.o eps.o image.o contour.o geom2d.o bezier.o
 	@echo ""
 	@echo "\033[92m Creation de l'executable \033[0m" $@
 	$(CC) $^ $(LDOPTS) -o $@

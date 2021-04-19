@@ -5,6 +5,34 @@
 #include "image.h"
 #include "bezier.h"
 
+Liste_Point simplification_douglas_peucker_bezier1(Tableau_Point T, int j1, int j2, double d){
+    double dmax = 0;
+    double dj;
+    int k = j1;
+    Liste_Point Liste = creer_liste_Point_vide();
+    Liste_Point *L = &Liste;
+
+    Segment Pj1j2 = init_segment(T.tab[j1], T.tab[j2]);
+
+    for (int j=j1+1; j<=j2; j++){
+        dj = distance_point_segment(T.tab[j], Pj1j2);
+        if (dmax < dj){
+            dmax = dj;
+            k = j;
+        }
+    }
+
+    if (dmax <= d){
+        ajouter_element_liste_Point(L, T.tab[j1]);
+        ajouter_element_liste_Point(L, T.tab[j2]);
+    }
+    else{
+        Liste = concatener_liste_Point(simplification_douglas_peucker_bezier1(T, j1, k, d), simplification_douglas_peucker_bezier1(T, k, j2, d));
+    }
+    return Liste;
+}
+
+
 Bezier2 approx_bezier2(Tableau_Point P, int j1, int j2){
     int n = j2-j1;
     Bezier2 B;

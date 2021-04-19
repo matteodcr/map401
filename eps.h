@@ -17,6 +17,8 @@ void fin_eps(FILE* f);
 /* Vectorise un fichier .pbm en .eps */
 void PbmToEps(char *nom_entree, char *nom_sortie);
 
+void PbmToEps_Bezier1(char *nom_entree, char *nom_sortie, double d);
+
 void PbmToEps_Bezier2(char *nom_entree, char *nom_sortie, double d);
 
 void PbmToEps_Bezier3(char *nom_entree, char *nom_sortie, double d);

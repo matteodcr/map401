@@ -68,6 +68,22 @@ void PbmToEps(char *nom_entree, char *nom_sortie){
     fin_eps(f);
 }
 
+void PbmToEps_Bezier1(char *nom_entree, char *nom_sortie, double d){ 
+    Image I = lire_fichier_image_inverse(nom_entree);
+    Image Im = creer_image_masque(I);
+    FILE *f = initialiser_eps(nom_sortie, 0, 0, I.L, I.H );
+    Point P;
+    while(trouver_pixel_depart(Im, &P)){
+        Liste_Point L = creer_liste_Point_vide();
+        L = contour(I, &Im, P.x, P.y);
+        Tableau_Point T = sequence_points_liste_vers_tableau(L);
+        L = simplification_douglas_peucker_bezier1(T, 0, T.taille-1, d);
+        T = sequence_points_liste_vers_tableau(L);
+        ecrire_eps_point(f, T);
+    }
+    fin_eps(f);
+}
+
 void PbmToEps_Bezier2(char *nom_entree, char *nom_sortie, double d){
     
     Image I = lire_fichier_image_inverse(nom_entree);
