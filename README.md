@@ -1,4 +1,5 @@
 # Vectorisation et simplification d'une image bitmap
+
 ## Les paquetages
 
  - `IMAGE` : gère le type `Image` (Une partie des fonctions du début du fichier appartiennent aux enseignants)
@@ -53,14 +54,17 @@ Les images et contours sont dans le dossier `Images`.
 ./test_dist_segment_point <x,y A> <x,y B> <x,y C>
 ```
 - Pour tester l'approximation des beziers 2
+
 ```
-# Si n = 1
+//Si n = 1
+
 ./test_approx2 <1> <P0x> <P0y> <P1x> <P1y>
 
-# Si n >= 2 
+//Si n >= 2 
+
 ./test_approx2 <j1> <j2> <Q0x> <Q0y> <Q1x> <Q1y> <Q2x> <Q2y>   
 
-# Si n = 8 alors un exemple précis est rempli
+ //Si n = 8 alors un exemple précis est rempli
 ```
 
 - Pour tester l'approximation des beziers 3
@@ -68,5 +72,6 @@ Les images et contours sont dans le dossier `Images`.
 ./test_approx3 (memes arguments avec +1 car bezier3)
 ```
 ## Crédits
+
 > @Mathis Grange & @Mattéo Decorsaire  : Sauf mention contraire les paquetages sont de notre conception. (LICENSE-MIT)
 (Nous contacter si oubli important)

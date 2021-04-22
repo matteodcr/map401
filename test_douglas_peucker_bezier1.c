@@ -8,7 +8,7 @@
 
 int main(int argc, char *argv[]) {
     if (argc != 4){
-        printf("Usage : ./test_douglas_peucker <Fichier PBM> <Fichier résultat> <seuil>\n");
+        printf("Usage : ./test_douglas_peucker_bezier1 <Fichier PBM> <Fichier résultat> <seuil>\n");
         exit(1);
     }
 

@@ -59,12 +59,15 @@ void PbmToEps(char *nom_entree, char *nom_sortie){
     FILE *f = initialiser_eps(nom_sortie, 0, 0, I.L, I.H );
 
     Point P;
+    int n;
     while(trouver_pixel_depart(Im, &P)){
         Liste_Point L = creer_liste_Point_vide();
         L = contour(I, &Im, P.x, P.y);
         Tableau_Point T = sequence_points_liste_vers_tableau(L);
+        n = T.taille -1;
         ecrire_eps_point(f, T);
     }
+    printf("Nombre de contours: %d \n\n", n);
     fin_eps(f);
 }
 
@@ -73,14 +76,17 @@ void PbmToEps_Bezier1(char *nom_entree, char *nom_sortie, double d){
     Image Im = creer_image_masque(I);
     FILE *f = initialiser_eps(nom_sortie, 0, 0, I.L, I.H );
     Point P;
+    int b = 0;
     while(trouver_pixel_depart(Im, &P)){
         Liste_Point L = creer_liste_Point_vide();
         L = contour(I, &Im, P.x, P.y);
         Tableau_Point T = sequence_points_liste_vers_tableau(L);
         L = simplification_douglas_peucker_bezier1(T, 0, T.taille-1, d);
         T = sequence_points_liste_vers_tableau(L);
+        b = b + T.taille -1;
         ecrire_eps_point(f, T);
     }
+    printf("Nombre de Bezier 1: %d \n\n", b);
     fin_eps(f);
 }
 
@@ -91,14 +97,17 @@ void PbmToEps_Bezier2(char *nom_entree, char *nom_sortie, double d){
     FILE *f = initialiser_eps(nom_sortie, 0, 0, I.L, I.H );
 
     Point P;
+    int b = 0;
     while(trouver_pixel_depart(Im, &P)){
         Liste_Point L = creer_liste_Point_vide();
         L = contour(I, &Im, P.x, P.y);
         Tableau_Point T = sequence_points_liste_vers_tableau(L);
         Liste_Bezier3 LB = simplification_douglas_peucker_bezier2(T, 0, T.taille-1, d);
         Tableau_Bezier3 TB = sequence_bezier3_liste_vers_tableau(LB);
+        b = b + TB.taille -1;
         ecrire_eps_Bezier(f, TB);
     }
+    printf("Nombre de Bezier 2: %d \n\n", b);
     fin_eps(f);
 }
 
@@ -119,6 +128,6 @@ void PbmToEps_Bezier3(char *nom_entree, char *nom_sortie, double d){
         i += TB.taille;
         ecrire_eps_Bezier(f, TB);
     }
-    printf("Nb de courbes de bézier 3 : %d\n", i);
+    printf("Nombre de Bezier 3: %d \n\n",i);
     fin_eps(f);
 }
