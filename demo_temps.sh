@@ -1,5 +1,7 @@
 #!/bin/bash
 
+mkdir Images/resultat-script
+
 echo Test sur $1
 echo ==================
 echo Sans simplification
