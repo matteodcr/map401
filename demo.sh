@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mkdir Images/resultat-script
+cd Images/resultat-script && cd ../.. || mkdir Images/resultat-script
 
 ./test_eps Images/pbm/$1.pbm Images/resultat-script/[CONTOUR]$1.eps
 
