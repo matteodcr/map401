@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mkdir Images/resultat-script
+cd Images/resultat-script && cd ../.. || mkdir Images/resultat-script
 
 echo Test sur $1
 echo ==================
