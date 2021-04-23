@@ -1,5 +1,7 @@
 #!/bin/bash
 
+mkdir Images/resultat-script
+
 ./test_eps Images/pbm/$1.pbm Images/resultat-script/[CONTOUR]$1.eps
 
 ./test_douglas_peucker_bezier1 Images/pbm/$1.pbm Images/resultat-script/[BEZIER1][1]$1.eps 1
