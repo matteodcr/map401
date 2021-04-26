@@ -1,2 +1,3 @@
-Images/* linguist-generated
-Images/*.pbm linguist-vendored
+Images/Contours/* linguist-generated
+Images/eps/* linguist-generated
+Images/pbm/* linguist-vendored
